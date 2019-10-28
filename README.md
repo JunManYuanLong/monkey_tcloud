@@ -2,6 +2,29 @@
 
 > https://github.com/tsbxmw/monkey_tcloud
 
+## Tcloud 配置
+
+### local_config.py 配置以下几项
+
+```python
+# Jenkins url
+CI_AUTO_MAN_JENKINS_URL = 'http://jenkins.tsbx.com/jenkins'
+# Jenkins Auth
+CI_AUTO_MAN_JENKINS_AUTH = {
+    "username": "mengwei",
+    "password": "mengwei"
+}
+# Jenkins job name
+CI_AUTO_MAN_JENKINS_MONKEY_JOB = 'monkey_autotest'
+# OSS report dir
+CI_REPORT_FILE_ADRESS = ""
+# JOBS url
+CI_JOB_ADDRESS = "http://jenkins.tsbx.com/jenkins/job"
+
+
+```
+
+
 ## Jenkins 配置
 
 ### Jobs 配置
@@ -183,3 +206,4 @@ optional arguments:
   --tcloud-url TCLOUD_URL, -turl TCLOUD_URL
 
 ```
+
