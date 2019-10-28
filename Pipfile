@@ -7,7 +7,7 @@ name = "pypi"
 
 [packages]
 requests = "*"
-urllib3 = "==1.22"
+urllib3 = "*"
 python-jenkins = "*"
 prettytable = "*"
 oss2 = "*"
