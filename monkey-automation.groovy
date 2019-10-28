@@ -36,16 +36,13 @@ node('stf'){
 
     stage('checkout code'){
         print('=================> 拉取代码  <=================')
-        // 此处要修改 url 和 credit
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/tsbxmw/monkey_tcloud']]])
         sh 'ls'
         print('=================> 拉取代码  <=================')
     }
 
-
     stage('运行测试 - Monkey'){
-      print("${InstallAppRequired}")
-      if ( "${InstallAppRequired}" == "true" || "${InstallAppRequired}" == true ){
+      if (installAppRequired == "true" || installAppRequired == true){
           sh 'python run.py run -dn=' + deviceName + ' -pn=' + packageName + ' -rt=' + runTime + ' -adu="' + appDownloadUrl + '" -daa=' + defaultAppActivity + ' -mid=' + monkeyId + ' -tid=' + taskId + ' -turl=' + tcloudUrl + ' -rm=' + runMode + ' -iar=' + installAppRequired
       }else{
         sh 'python run.py run -dn=' + deviceName + ' -pn=' + packageName + ' -rt=' + runTime + ' -adu="' + appDownloadUrl + '" -daa=' + defaultAppActivity + ' -mid=' + monkeyId + ' -tid=' + taskId + ' -turl=' + tcloudUrl + ' -rm=' + runMode
