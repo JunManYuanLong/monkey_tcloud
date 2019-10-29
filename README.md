@@ -8,19 +8,18 @@
 
 ```python
 # Jenkins url
-CI_AUTO_MAN_JENKINS_URL = 'http://jenkins.tsbx.com/jenkins'
+CI_AUTO_MAN_JENKINS_URL = 'JenkinsURL 填写对应的本地路径'
 # Jenkins Auth
 CI_AUTO_MAN_JENKINS_AUTH = {
-    "username": "mengwei",
-    "password": "mengwei"
+    "username": "用户名",
+    "password": "密码"
 }
 # Jenkins job name
 CI_AUTO_MAN_JENKINS_MONKEY_JOB = 'monkey_autotest'
 # OSS report dir
 CI_REPORT_FILE_ADRESS = ""
 # JOBS url
-CI_JOB_ADDRESS = "http://jenkins.tsbx.com/jenkins/job"
-
+CI_JOB_ADDRESS = f"{CI_AUTO_MAN_JENKINS_URL}/job"
 
 ```
 
