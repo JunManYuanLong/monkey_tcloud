@@ -42,7 +42,7 @@ CI_JOB_ADDRESS = f"{CI_AUTO_MAN_JENKINS_URL}/job"
 |RunTime| String type | 运行时间 单位分钟|
 |AppDownloadUrl| String type | app 下载路径|
 |PATH| String type | PATH|
-|RunMod | String type | Monkey运行模式。 mix: 类monkey模式。70%控件解析随机点击，其余30%按原Monkey事件概率分布。支持android版本>=5  dfs: DFS深度遍历算法。支持android版本>=6 |
+|RunMode | String type | Monkey运行模式。 mix: 类monkey模式。70%控件解析随机点击，其余30%按原Monkey事件概率分布。支持android版本>=5  dfs: DFS深度遍历算法。支持android版本>=6 |
 |MonkeyId| String type | tcloud 相关参数，定位 build id|
 |TaskId| String type | tcloud 相关参数，定位 当前设备测试的 id |
 |TcloudUrl| String type | tcloud 相关参数，api根 url |
@@ -51,6 +51,7 @@ CI_JOB_ADDRESS = f"{CI_AUTO_MAN_JENKINS_URL}/job"
 |LoginRequired| Bool type | 是否需要登录，未使用 |
 |LoginUsername| String type | 登录用的用户名, 未使用|
 |LoginPassword| String type | 登录用的密码，未使用|
+|BuildBelong| String type | 未使用 |
 
 #### 配置 pipeline
 

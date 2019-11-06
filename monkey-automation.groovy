@@ -5,7 +5,6 @@ node('stf'){
         runTime = "${RunTime}"
         appDownloadUrl = "${AppDownloadUrl}"
         runMode = "${RunMode}"
-        buildBelong = "${BuildBelong}"
         systemDevice = "${SystemDevice}"
         loginRequired = "${LoginRequired}"
         loginUsername = "${LoginUsername}"
@@ -21,7 +20,6 @@ node('stf'){
               "RunTime : " + runTime + "\n" +
               "AppDownloadUrl : " + appDownloadUrl + "\n" +
               "RunMode : " + runMode + "\n" +
-              "BuildBelong : " + buildBelong + "\n" +
               "SystemDevice : " + systemDevice + "\n" +
               "LoginRequired : " + loginRequired + "\n" +
               "LoginUsername : " + loginUsername + "\n" +
