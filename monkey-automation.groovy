@@ -13,7 +13,7 @@ node('stf'){
         tcloudUrl = "${TcloudUrl}"
         taskId = "${TaskId}"
         monkeyId = "${MonkeyId}"
-        installAppRequired = "${InstallAppRequired}"=="1"
+        installAppRequired = "${InstallAppRequired}"
         print("==================> 参数 <==================")
         print("PackageName : " + packageName + "\n" +
               "DeviceName : " + deviceName + "\n" +
@@ -30,7 +30,9 @@ node('stf'){
               "TaskId: " + taskId + "\n" +
               "InstallAppRequired: "+ installAppRequired)
         print("==================> 参数 <==================")
+        installAppRequired = installAppRequired=="1"
     }
+
 
     stage('checkout code'){
         print('=================> 拉取代码  <=================')
