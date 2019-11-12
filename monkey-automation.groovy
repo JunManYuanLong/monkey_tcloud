@@ -13,7 +13,7 @@ node('stf'){
         tcloudUrl = "${TcloudUrl}"
         taskId = "${TaskId}"
         monkeyId = "${MonkeyId}"
-        installAppRequired = "${InstallAppRequired}"
+        installAppRequired = "${InstallAppRequired}"=="1"
         print("==================> 参数 <==================")
         print("PackageName : " + packageName + "\n" +
               "DeviceName : " + deviceName + "\n" +

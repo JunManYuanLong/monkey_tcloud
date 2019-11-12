@@ -47,7 +47,7 @@ CI_JOB_ADDRESS = f"{CI_AUTO_MAN_JENKINS_URL}/job"
 |TaskId| String type | tcloud 相关参数，定位 当前设备测试的 id |
 |TcloudUrl| String type | tcloud 相关参数，api根 url |
 |SystemDevice| Bool type | 是否是 系统设备，未使用 |
-|InstallAppRequired| Bool type | 是否需要安装 App |
+|InstallAppRequired| String type | 是否需要安装 App, 1需要，2不需要 |
 |LoginRequired| Bool type | 是否需要登录，未使用 |
 |LoginUsername| String type | 登录用的用户名, 未使用|
 |LoginPassword| String type | 登录用的密码，未使用|
