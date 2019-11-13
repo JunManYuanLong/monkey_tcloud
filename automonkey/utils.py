@@ -113,7 +113,7 @@ class Utils(object):
     def upload_bug_report_log_to_oss(cls, log_path):
         endpoint = DefaultConfig.OSS_URL
         auth = DefaultConfig.OSS_AUTH
-        bucket = oss2.Bucket(auth, endpoint, 'ctsssource')
+        bucket = oss2.Bucket(auth, endpoint, DefaultConfig.OSS_BUCKET_NAME)
         cls.upload_dir(log_path, bucket)
 
     @classmethod
@@ -121,7 +121,7 @@ class Utils(object):
         if not bucket:
             endpoint = DefaultConfig.OSS_URL
             auth = DefaultConfig.OSS_AUTH
-            bucket = oss2.Bucket(auth, endpoint, 'ctsssource')
+            bucket = oss2.Bucket(auth, endpoint, DefaultConfig.OSS_BUCKET_NAME)
 
         now = datetime.now().strftime("%Y-%m-%d")
         build_number = os.environ.get('BUILD_NUMBER')
@@ -133,7 +133,7 @@ class Utils(object):
         if not bucket:
             endpoint = DefaultConfig.OSS_URL
             auth = DefaultConfig.OSS_AUTH
-            bucket = oss2.Bucket(auth, endpoint, 'ctsssource')
+            bucket = oss2.Bucket(auth, endpoint, DefaultConfig.OSS_BUCKET_NAME)
 
         fs = os.listdir(dir_path)
         dir_path_new = dir_path

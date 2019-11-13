@@ -45,6 +45,8 @@ class DefaultConfig(object):
 
     OSS_AUTH = oss2.Auth('username', 'password')  # oss auth
 
+    OSS_BUCKET_NAME = ''  # oss bucket name
+
 
 class MonkeyConfig(object):
 
