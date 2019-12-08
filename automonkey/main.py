@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import argparse
 import logging
 import traceback
@@ -28,6 +31,7 @@ def main():
     sub_run_arg_program.add_argument('--run-mode', '-rm', dest='run_mode', type=str)
     sub_run_arg_program.add_argument('--build-belong', '-bb', dest='build_belong', type=str)
     sub_run_arg_program.add_argument('--install-app-required', '-iar', dest='install_app_required', type=str)
+    sub_run_arg_program.add_argument('--uninstall-app-required', '-uiar', dest='uninstall_app_required', type=str)
     sub_run_arg_program.add_argument('--system-device', '-sd', dest='system_device', type=str)
     sub_run_arg_program.add_argument('--login-required', '-lr', dest='login_required', type=str)
     sub_run_arg_program.add_argument('--login-username', '-lu', dest='login_username', type=str)
@@ -36,6 +40,8 @@ def main():
     sub_run_arg_program.add_argument('--task-id', '-tid', dest='task_id', type=str)
     sub_run_arg_program.add_argument('--monkey-id', '-mid', dest='monkey_id', type=str)
     sub_run_arg_program.add_argument('--tcloud-url', '-turl', dest='tcloud_url', type=str)
+    sub_run_arg_program.add_argument('--test-type', '-ttype', dest='test_type', type=str)
+    sub_run_arg_program.add_argument('--test-config', '-tconfig', dest='test_config', type=str)
 
     try:
         args = arg_program.parse_args()
@@ -59,6 +65,9 @@ def main():
             args.system_device = args.system_device in ["true", "True"]
 
         if hasattr(args, 'login_required'):
+            args.login_required = args.login_required in ["true", "True"]
+
+        if hasattr(args, 'uninstall_app_required'):
             args.login_required = args.login_required in ["true", "True"]
 
         logger.info(args)

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import json
 import logging
 import traceback
@@ -48,8 +50,9 @@ class TCloud(object):
         begin_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         self.update_task(process=process, begin_time=begin_time)
 
-    def on_task_end(self, process, activity_count, activity_tested_count, activity_all, activity_tested, anr_count,
-                    crash_count, crash_rate, exception_count, exception_run_time, run_time):
+    def on_task_end(self, process=None, activity_count=None, activity_tested_count=None, activity_all=None,
+                    activity_tested=None, anr_count=None, crash_count=None, crash_rate=None, exception_count=None,
+                    exception_run_time=None, run_time=None):
         end_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         self.update_task(process=process, end_time=end_time, activity_count=activity_count, anr_count=anr_count,
                          activity_tested_count=activity_tested_count, activity_all=activity_all,
@@ -390,3 +393,51 @@ class TCloud(object):
         except Exception as e:
             logger.error(e)
             logger.error(traceback.format_exc())
+
+    def upload_realtime_log(self, performance_test_id, cpu, rss, heap_size, heap_alloc):
+        try:
+            logger.info('upload realtime log now!')
+            request_data = {
+                'cpu': str(cpu),
+                'rss': str(rss),
+                'heap_size': str(heap_size),
+                'heap_alloc': str(heap_alloc),
+            }
+            request_url = '{}/v1/performance/realtime/{}'.format(self.tcloud_url, performance_test_id)
+
+            response = requests.request(method='POST', url=request_url, json=request_data)
+            if response.ok:
+                logger.info(response.json())
+                return response.json()
+        except Exception as e:
+            logger.error(e)
+
+    def create_performance_test(self, run_type, run_time):
+        try:
+            logger.info('create_performance_test now!')
+            request_data = {
+                'performance_id': int(self.task_id),
+                'run_type': run_type,
+                'run_time': run_time
+            }
+            request_url = '{}/v1/performance/test'.format(self.tcloud_url)
+
+            response = requests.request(method='POST', url=request_url, json=request_data)
+            if response.ok:
+                logger.info(response.json())
+                return response.json().get('data')[0].get('id')
+        except Exception as e:
+            logger.error(e)
+            return 0
+
+    def calculate_performance_test(self, performance_test_id):
+        try:
+            logger.info('calculate performance test average and top now now!')
+            request_url = '{}/v1/performance/test/calculate/{}'.format(self.tcloud_url, performance_test_id)
+            response = requests.request(method='GET', url=request_url)
+            if response.ok:
+                logger.info(response.json())
+                return response.json()
+        except Exception as e:
+            logger.error(e)
+            return 0

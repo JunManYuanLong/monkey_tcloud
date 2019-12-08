@@ -141,6 +141,16 @@ class AdbTool(object):
             logger.error(e)
             logger.error(traceback.format_exc())
 
+
+    def run_performance(self, performance_command):
+        try:
+            cmd = '{}'.format(performance_command)
+            p = Utils.command_execute(cmd)
+            return p
+        except Exception as e:
+            logger.error(e)
+            logger.error(traceback.format_exc())
+
     def install_package(self, local_package_path, package_name, force_install=False):
         logger.info('({}) 开始安装包 ： {}'.format(self.device_name, local_package_path))
         try:
@@ -402,3 +412,73 @@ class AdbTool(object):
         except Exception as e:
             logger.error(e)
             logger.error(traceback.format_exc())
+
+    def set_system_default_input(self, key):
+        try:
+            if key:
+                logger.info('try to set system default input to qjp')
+                key_of_qjp = key
+                cmd = '{} shell ime enable {}'.format(self.adb_command, key_of_qjp)
+                p = Utils.command_execute(cmd)
+                logger.info(self.output(p))
+                time.sleep(5)
+                cmd = '{} shell ime set {}'.format(self.adb_command, key_of_qjp)
+                p = Utils.command_execute(cmd)
+                logger.info(self.output(p))
+                time.sleep(5)
+                return True
+        except Exception as e:
+            logger.error(e)
+
+    def get_memory_info(self, package_name):
+        try:
+            logger.info('try to get memory information')
+            cmd = '{} shell dumpsys meminfo {}'.format(self.adb_command, package_name)
+            p = Utils.command_execute(cmd)
+            lines = self.output(p)
+            # lines = Utils.deal_with_python_version(lines)
+            heap_size, heap_alloc = 0, 0
+            for line in lines:
+                if 'Native Heap' in line:
+                    temp = line.split()
+                    if len(temp) == 9:
+                        heap_size = temp[-3]
+                        heap_alloc = temp[-2]
+                    break
+            heap_size = int(heap_size) if heap_size != '' else 0
+            heap_alloc = int(heap_alloc) if heap_alloc != '' else 0
+            return heap_size, heap_alloc
+        except Exception as e:
+            logger.error(e)
+            return 0, 0
+
+    def get_cpu(self, package_name):
+        try:
+            logger.info('try to get cpu information')
+            cmd = '{} shell top -n 1 | grep {} '.format(self.adb_command, package_name)
+            p = Utils.command_execute(cmd)
+            lines = self.output(p)
+            # lines = Utils.deal_with_python_version(lines)
+            cpu = rss = 0
+            for line in lines:
+                logger.info(line)
+                if package_name in line and f'{package_name}:' not in line:
+                    temp = re.findall(r'.* (\w+)% .* (\w+)K (\w+)K .* {}'.format(package_name), line)
+                    cpu = temp[0][0]
+                    rss = temp[0][2]
+                    break
+            cpu = int(cpu) if cpu != '' else 0
+            rss = int(rss) if rss != '' else 0
+            return cpu, rss
+        except Exception as e:
+            logger.error(e)
+            return 0, 0
+
+    def clear_package_cache_data(self, package_name):
+        try:
+            logger.info('try to clear cache data information')
+            cmd = '{} shell pm clear {}'.format(self.adb_command, package_name)
+            lines = Utils.command_execute(cmd)
+            return lines
+        except Exception as e:
+            logger.error(e)
