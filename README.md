@@ -2,6 +2,8 @@
 
 > https://github.com/tsbxmw/monkey_tcloud
 
+![](./doc/monkey_framework.png)
+
 ## Tcloud 配置
 
 ### local_config.py 配置以下几项
