@@ -60,6 +60,7 @@ class MonkeyConfig(object):
         self.login_username = ''
         self.login_password = ''
         self.install_app_required = ''
+        self.uninstall_app_required = ''
 
     def constructor(self, config):
         if isinstance(config, dict):
@@ -71,6 +72,7 @@ class MonkeyConfig(object):
             self.login_username = config.get('login_username')
             self.login_password = config.get('login_password')
             self.install_app_required = config.get('install_app_required')
+            self.uninstall_app_required = config.get('uninstall_app_required')
 
     @property
     def info(self):
@@ -83,5 +85,51 @@ class MonkeyConfig(object):
             'login_required': self.login_required,
             'login_username': self.login_username,
             'login_password': self.login_password,
-            'install_app_required': self.install_app_required
+            'install_app_required': self.install_app_required,
+            'uninstall_app_required': self.uninstall_app_required
+        }
+
+
+class PerformanceConfig(object):
+
+    def __init__(self):
+        self.run_mode = ''
+        self.package_name = ''
+        self.default_app_activity = ''
+        self.run_time = ''
+        self.local_package_path = ''
+        self.login_required = ''
+        self.login_username = ''
+        self.login_password = ''
+        self.install_app_required = ''
+        self.uninstall_app_required = ''
+        self.test_envs = {}
+
+    def constructor(self, config):
+        if isinstance(config, dict):
+            self.run_mode = config.get('run_mode') or DefaultConfig.RUN_MODE_MIX
+            self.run_time = config.get('run_time') or DefaultConfig.RUN_TIME_DEFAULT
+            self.default_app_activity = config.get('default_app_activity')
+            self.package_name = config.get('package_name')
+            self.login_required = config.get('login_required')
+            self.login_username = config.get('login_username')
+            self.login_password = config.get('login_password')
+            self.install_app_required = config.get('install_app_required')
+            self.test_envs = config.get('test_config')
+            self.uninstall_app_required = config.get('uninstall_app_required')
+
+    @property
+    def info(self):
+        return {
+            'run_mode': self.run_mode,
+            'package_name': self.package_name,
+            'default_app_activity': self.default_app_activity,
+            'run_time': self.run_time,
+            'local_package_path': self.local_package_path,
+            'login_required': self.login_required,
+            'login_username': self.login_username,
+            'login_password': self.login_password,
+            'install_app_required': self.install_app_required,
+            'test_envs': self.test_envs,
+            'uninstall_app_required': self.uninstall_app_required
         }

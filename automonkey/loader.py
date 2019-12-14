@@ -27,9 +27,9 @@ class Loader(object):
 
             self.params['build_belong'] = args.build_belong
             self.params['app_download_url'] = args.app_download_url
-
-            # 构建 monkey dict
-            self.params['monkey'] = {
+            self.params['test_type'] = args.test_type
+            # 构建 case dict
+            self.params['case'] = {
                 'config': {
                     'run_mode': args.run_mode,
                     'package_name': args.package_name,
@@ -39,7 +39,8 @@ class Loader(object):
                     'login_required': args.login_required,
                     'login_password': args.login_password,
                     'login_username': args.login_username,
-                    'install_app_required': args.install_app_required
+                    'install_app_required': args.install_app_required,
+                    'test_config': args.test_config
                 }
             }
 

@@ -44,7 +44,11 @@ class Runner(object):
 
             self.setup(case)
 
-            self.run_monkeys(case.monkey_cases)
+            if case.case_type == 1:
+                self.run_monkeys(case.cases)
+            elif case.case_type == 2:
+                self.run_performance(case.cases)
+
 
         except Exception as e:
             logger.error(e)
@@ -70,6 +74,49 @@ class Runner(object):
             table_process.field_names = ["process id", "device id"]
             for process in process_list:
                 row = [process.pid, process.monkey.device.device_id]
+                table_process.add_row(row)
+            logger.info('\n{}'.format(table_process))
+
+            results = []
+            while True:
+                if len(results) == len(process_list):
+                    break
+                if not self.queue.empty():
+                    results.append(self.queue.get())
+
+            for result in results:
+                print(result.info)
+
+        except FileDownloadErrorException as f_e:
+            logger.error(f_e)
+            logger.error(traceback.format_exc())
+            self.tcloud.on_download_app(False)
+        except Exception as e:
+            logger.error(e)
+            traceback.print_exc()
+        finally:
+            self.tcloud.on_monkey_end()
+
+    def run_performance(self, performances):
+        try:
+            if not isinstance(performances, list):
+                logger.error('Need list Here, not {}'.format(type(performances)))
+                raise TypeError
+
+            self.tcloud.on_monkey_begin(os.environ.get('BUILD_URL'))
+
+            process_list = []
+            for performance in performances:
+                process = PerformanceRunner(self.queue, self.lock, performance)
+                process_list.append(process)
+
+            for process in process_list:
+                process.start()
+
+            table_process = prettytable.PrettyTable()
+            table_process.field_names = ["process id", "device id"]
+            for process in process_list:
+                row = [process.pid, process.performance.device.device_id]
                 table_process.add_row(row)
             logger.info('\n{}'.format(table_process))
 
